@@ -8,15 +8,19 @@ import controlP5.*;
 ControlP5 cp5;
 DropdownList dSerial;
 
+ControlP5 cp5command;
+DropdownList dCommand;
+
 void setupControl() {
   cp5 = new ControlP5(this);
   dSerial = cp5.addDropdownList("Serial-List").setPosition(10, 20);
-  dSerial.captionLabel().set("Serial Port");
+  dSerial.captionLabel().set("Connect");
   for (int i=0; i<Serial.list ().length; i++) {
     dSerial.addItem(Serial.list()[i], i);
   }
   dSerial.setColorBackground(color(60));
   dSerial.setColorActive(color(255, 128));
+ 
 }
 
 void controlEvent(ControlEvent theEvent) {
@@ -28,8 +32,17 @@ void controlEvent(ControlEvent theEvent) {
 
   if (theEvent.isGroup()) {
     // check if the Event was triggered from a ControlGroup
-    println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup());
+    //println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup());
+
+      if (portIndex!= -1) myPort.stop();
+      portIndex = int(dSerial.getValue());
+    
+      myPort = new Serial(this, Serial.list()[portIndex], 115200);
+      myPort.clear();
+      println("3Dpad connecting to -> " + Serial.list()[portIndex]);
+    
+    
   } else if (theEvent.isController()) {
-    println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
+    //println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
   }
 }
