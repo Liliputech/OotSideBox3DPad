@@ -5,7 +5,7 @@ Demo software written by Liliputech
 
 void setup()
 {
-  size(800, 400);
+  size(500, 500);
   println("3Dpad>");
   setupControl();
 } 
@@ -13,21 +13,31 @@ void setup()
 void draw()
 {
   background(0);
-  setupSerial();
-  fill(255);noStroke();
-  ellipse(x, y, z, z);
-  fill(0, 0, 255);
-  ellipse(dynX, dynY, 20, 20);
-  stroke(0,255,0);
-  line(dynX,dynY,x,dynY);
-  line(dynX,dynY,dynX,y);
+  fill(0, 255, 0);
+  
+  noStroke();
+  
+  if (z<250)
+   {
+    if (z > 40) ellipse(x, y, z, z);
+    else ellipse(x, y, 40, 40);
+    
+    fill(153);
+    ellipse(dynX, dynY, 10, 10);
+    
+    
+    stroke(255);
+    line(dynX,dynY,x,dynY);
+    line(dynX,dynY,dynX,y);
+  }
+  
 }
-
 
 
 
 void keyPressed() 
 {
   print("\n\rKeyboard -> "+key);
+  print("\n\r");
   myPort.write(key);
 }
