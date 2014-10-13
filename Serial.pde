@@ -6,20 +6,13 @@ Demo software written by Liliputech
 import processing.serial.*;
 
 Serial myPort;
-int portIndex=Serial.list().length;
+int portIndex=-1;
 int counterTrame = 0;
-
+int automateReceive = 0;
 private String receivedString;
 String rawValues;
 String detectedMotion;
 
-void setupSerial() {
-  if (portIndex != dSerial.getValue()) {
-    portIndex = int(dSerial.getValue());
-    myPort = new Serial(this, Serial.list()[portIndex], 115200);
-    println("connect to -> " + Serial.list()[portIndex]);
-  }
-}
 
 void serialEvent(Serial p)
 {
@@ -31,37 +24,61 @@ void serialEvent(Serial p)
 }
 
 void processSerial(char chartmp) {
-  int automateReceive = 0;
+  
+  if( chartmp == '.') print(".");
+ 
   switch(automateReceive) {
   case 0:
     if (chartmp == '>') automateReceive = 1; 
-
+    break;
+    
   case 1:
     if (chartmp == 'A') automateReceive = 2; 
-    //    if (chartmp == 'G') automateReceive = 3; 
+    if (chartmp == 'G') automateReceive = 3; 
     if (chartmp == 'V') {
       automateReceive = 4;
       counterTrame = 0;
       receivedString = "";
     }
-
-    //Petits problèmes avec la detection de mouvement...
-    /*
-  case 3:
+  break;
+    
+   case 2: //etats de l'automate 3Dpad
+     print("\n\rState: "); 
+     
+     switch(chartmp)
+     {
+           case '0':
+           case '1':
+                     print("Autocalibration, please wait ...");
+                     break;
+           case '2':
+                     print("Setup ");
+                     break;
+           case '3':
+                     print("Run");
+                     break;
+     }
+     myPort.write('V');   
+     automateReceive = 0;
+   break;
+    
+  case 3: //gestures
+     print("\n\rGest: "); 
      detectGesture(chartmp);
      automateReceive = 0;
-     println(detectedMotion);    
-     */
-
+     print(detectedMotion);    
+     
+  break;
   case 4:
     receivedString += chartmp;
     counterTrame++;
     if (counterTrame == 60) {
       rawValues=receivedString;
       calculateCoord();
-      println(rawValues);
+      //println(rawValues);
+      automateReceive = 0;
     }
-    automateReceive = 0;
+    break;
   }
 }
 
@@ -86,15 +103,13 @@ void detectGesture(char chartmp) {
     detectedMotion = "DOWN";
     break;
   case '6':
-    detectedMotion = "TurnL";
+    detectedMotion = "TurnL : "+ turnL;
     break;
   case '7':
-    detectedMotion = "TurnR";
+    detectedMotion = "TurnR : " + turnR;
     break;
   case '8':
     detectedMotion = "PUSH";
     break;
   }
 }
-
-
