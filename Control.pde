@@ -35,15 +35,7 @@ void setupControl() {
 }
 
 void controlEvent(ControlEvent theEvent) {
-  // DropdownList is of type ControlGroup.
-  // A controlEvent will be triggered from inside the ControlGroup class.
-  // therefore you need to check the originator of the Event with
-  // if (theEvent.isGroup())
-  // to avoid an error message thrown by controlP5.
-
   if (theEvent.isGroup()) {
-    // check if the Event was triggered from a ControlGroup
-    //println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup());
 
       if (portIndex!= -1) myPort.stop();
       portIndex = int(dSerial.getValue());
@@ -52,10 +44,15 @@ void controlEvent(ControlEvent theEvent) {
       myPort.clear();
       println("3Dpad connecting to -> " + Serial.list()[portIndex]);
     
-    
-  } else if (theEvent.isController()) {
-    println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
   }
+}
+
+public void Connect(int portIndex) {
+      if (portIndex!= -1) myPort.stop();
+    
+      myPort = new Serial(this, Serial.list()[portIndex], 115200);
+      myPort.clear();
+      println("3Dpad connecting to -> " + Serial.list()[portIndex]);
 }
 
 public void Calibrate(int value) {
