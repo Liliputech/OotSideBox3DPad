@@ -6,6 +6,7 @@ Demo software written by Liliputech
 void setup()
 {
   size(500, 500);
+  if (frame != null) frame.setResizable(true);
   println("3Dpad>");
   setupControl();
 } 
@@ -32,8 +33,6 @@ void draw()
   }
   
 }
-
-
 
 void keyPressed() 
 {
