@@ -57,3 +57,11 @@ void controlEvent(ControlEvent theEvent) {
     println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
   }
 }
+
+public void Calibrate(int value) {
+	myPort.write('A');
+}
+
+public void Setup(int value) {
+	myPort.write('S');
+}
