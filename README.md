@@ -13,4 +13,6 @@ alt="Processing & 3DPad" width="240" height="180" border="10" /></a>
 
 More information on www.ootsidebox.com
 
+Don't forget to rename the sketch folder from OotSideBox3DPad-master to OotSideBox3DPad to respect Processing's naming conventions.
+
 Happy coding, wonderfull morning :)
