@@ -7,12 +7,23 @@ import processing.serial.*;
 import controlP5.*;
 ControlP5 cp5;
 DropdownList dSerial;
-
-ControlP5 cp5command;
-DropdownList dCommand;
+Button bCalibrate, bSetup;
 
 void setupControl() {
   cp5 = new ControlP5(this);
+
+  bCalibrate = cp5.addButton("Calibrate")
+                  .setValue(0)
+                  .setPosition(10,30)
+                  .setColorBackground(color(60))
+                  .setColorActive(color(255, 128));
+
+  bSetup = cp5.addButton("Setup")
+                  .setValue(0)
+                  .setPosition(10,50)
+  		  .setColorBackground(color(60))
+                  .setColorActive(color(255, 128));
+
   dSerial = cp5.addDropdownList("Serial-List").setPosition(10, 20);
   dSerial.captionLabel().set("Connect");
   for (int i=0; i<Serial.list ().length; i++) {
@@ -43,6 +54,6 @@ void controlEvent(ControlEvent theEvent) {
     
     
   } else if (theEvent.isController()) {
-    //println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
+    println("event from controller : "+theEvent.getController().getValue()+" from "+theEvent.getController());
   }
 }
