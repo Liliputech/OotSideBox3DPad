@@ -31,7 +31,6 @@ void draw()
     line(dynX,dynY,x,dynY);
     line(dynX,dynY,dynX,y);
   }
-  
 }
 
 void keyPressed() 
