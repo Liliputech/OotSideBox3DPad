@@ -75,6 +75,7 @@ void processSerial(char chartmp) {
     if (counterTrame == 60) {
       rawValues=receivedString;
       calculateCoord();
+      sendOSC();
       //println(rawValues);
       automateReceive = 0;
     }
