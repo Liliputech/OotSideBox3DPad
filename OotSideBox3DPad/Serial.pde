@@ -13,8 +13,7 @@ private String receivedString;
 String rawValues;
 String detectedMotion;
 
-
-void serialEvent(Serial p)
+void serialEvent(Serial myPort)
 {
   if (myPort.available() > 0)
   {
