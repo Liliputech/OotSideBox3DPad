@@ -6,7 +6,7 @@ Demo software written by Liliputech
 void setup()
 {
   size(500, 500);
-  if (frame != null) frame.setResizable(true);
+  if (surface != null) surface.setResizable(true);
   println("3Dpad>");
   setupControl();
 } 
@@ -31,11 +31,4 @@ void draw()
     line(dynX,dynY,x,dynY);
     line(dynX,dynY,dynX,y);
   }
-}
-
-void keyPressed() 
-{
-  print("\n\rKeyboard -> "+key);
-  print("\n\r");
-  myPort.write(key);
 }
