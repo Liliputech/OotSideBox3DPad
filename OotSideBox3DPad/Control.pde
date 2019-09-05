@@ -38,8 +38,16 @@ void setupControl() {
 public void PortList(int portIndex) {
   println(portIndex);
   if (portIndex < 0) return;
+  try {
+    myPort.stop();
+  }
+  catch (NullPointerException e) {
+    println("No previous Serial port to disconnect from");
+  }
   println("3Dpad connecting to -> " + Serial.list()[portIndex]);
   myPort = new Serial(this, Serial.list()[portIndex], 115200);
+  Setup();
+  Calibrate();
 }
 
 public void Calibrate() {
